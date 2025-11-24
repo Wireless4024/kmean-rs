@@ -144,7 +144,7 @@ where
             // Only shuffle a beginning index for a consecutive block within the shuffled samples as batch
             let batch = BatchInfo {
                 batch_size,
-                start_idx: config.rnd.borrow_mut().gen_range(0..data.sample_cnt - batch_size),
+                start_idx: config.rnd.borrow_mut().random_range(0..data.sample_cnt - batch_size),
             };
 
             Self::update_cluster_assignments(data, &mut state, &batch, &shuffled_samples.bfr, None);

@@ -1,6 +1,7 @@
 use crate::helpers;
 use core::fmt;
-use rand::distributions::uniform::SampleUniform;
+use rand::distr::uniform::SampleUniform;
+use rand::distr::weighted::Weight;
 use std::ops::{Index, IndexMut};
 use std::simd::num::SimdFloat;
 use std::simd::{LaneCount, Simd, SimdElement, SupportedLaneCount};
@@ -10,6 +11,7 @@ pub trait Primitive:
     'static
     + SimdElement
     + SampleUniform
+    + Weight
     + Default
     + fmt::Display
     + fmt::Debug
@@ -33,6 +35,7 @@ impl<T> Primitive for T where
     T: 'static
         + SimdElement
         + SampleUniform
+        + Weight
         + Default
         + fmt::Display
         + fmt::Debug

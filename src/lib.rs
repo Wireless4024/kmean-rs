@@ -143,7 +143,7 @@ mod tests {
     {
         let mut rnd = rand::rngs::StdRng::seed_from_u64(1337);
         let mut samples = vec![T::zero(); sample_cnt * sample_dims];
-        samples.iter_mut().for_each(|v| *v = rnd.gen_range(T::zero()..T::one()));
+        samples.iter_mut().for_each(|v| *v = rnd.random_range(T::zero()..T::one()));
         let kmean: KMeans<T, LANES, _> = KMeans::new(&samples, sample_cnt, sample_dims, EuclideanDistance);
         let conf = KMeansConfig::build().random_generator(rnd).build();
         b.iter(|| kmean.kmeans_lloyd(k, max_iter, KMeans::init_kmeanplusplus, &conf));
@@ -175,7 +175,7 @@ mod tests {
     {
         let mut rnd = rand::rngs::StdRng::seed_from_u64(1337);
         let mut samples = vec![T::zero(); sample_cnt * sample_dims];
-        samples.iter_mut().for_each(|v| *v = rnd.gen_range(T::zero()..T::one()));
+        samples.iter_mut().for_each(|v| *v = rnd.random_range(T::zero()..T::one()));
         let kmean = KMeans::new(&samples, sample_cnt, sample_dims, EuclideanDistance);
         let conf = KMeansConfig::build().random_generator(rnd).build();
         b.iter(|| kmean.kmeans_minibatch(batch_size, k, max_iter, KMeans::init_random_sample, &conf));

@@ -16,7 +16,7 @@ where
         (&mut state.assignments, &mut state.centroids, &mut state.centroid_frequency, state.k);
 
     assignments.iter_mut().for_each(|a| {
-        *a = config.rnd.borrow_mut().gen_range(0..k);
+        *a = config.rnd.borrow_mut().random_range(0..k);
         centroid_frequency[*a] += 1;
     });
     kmean

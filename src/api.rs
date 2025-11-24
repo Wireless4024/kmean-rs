@@ -34,7 +34,7 @@ impl<T: Primitive> Default for KMeansConfig<'_, T> {
         Self {
             init_done: &|_| {},
             iteration_done: &|_, _, _| {},
-            rnd: Box::new(RefCell::new(rand::thread_rng())),
+            rnd: Box::new(RefCell::new(rand::rng())),
             abort_strategy: AbortStrategy::<T>::NoImprovement {
                 threshold: T::from(0.0005).unwrap(),
             },
@@ -416,7 +416,7 @@ mod tests {
 
         let mut samples = vec![T::zero(); sample_cnt * sample_dims];
         let mut rng = rand::rngs::StdRng::seed_from_u64(1337);
-        samples.iter_mut().for_each(|i| *i = rng.gen_range(T::zero()..T::one()));
+        samples.iter_mut().for_each(|i| *i = rng.random_range(T::zero()..T::one()));
 
         let kmean = KMeans::new(&samples, sample_cnt, sample_dims, EuclideanDistance);
 
@@ -492,7 +492,7 @@ mod tests {
 
         let mut samples = vec![T::zero(); sample_cnt * sample_dims];
         let mut rng = rand::rngs::StdRng::seed_from_u64(1337);
-        samples.iter_mut().for_each(|v| *v = rng.gen_range(T::zero()..T::one()));
+        samples.iter_mut().for_each(|v| *v = rng.random_range(T::zero()..T::one()));
         let kmean: KMeans<T, LANES, _> = KMeans::new(&samples, sample_cnt, sample_dims, EuclideanDistance);
 
         let mut state = KMeansState::new::<LANES>(kmean.sample_cnt, sample_dims, k);

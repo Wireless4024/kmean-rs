@@ -1,8 +1,8 @@
 [package]
 name = "kmeans"
-version = "2.0.1"
+version = "3.0.0"
 authors = ["Markus Ebner <hiwatari.seiji@gmail.com>"]
-edition = "2021"
+edition = "2024"
 description = "Small and fast library for k-means clustering calculations."
 documentation = "https://docs.rs/kmeans/"
 repository = "https://github.com/seijikun/kmean-rs"
@@ -13,7 +13,7 @@ categories = ["algorithms", "science"]
 exclude = ["examples/*"]
 
 [dependencies]
-rayon = "1.10.0"
+rayon = "1.11.0"
 rand = "0.9"
 num = "0.4.3"
 num-traits = "0.2.19"

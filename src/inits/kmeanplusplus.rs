@@ -1,7 +1,7 @@
 use crate::api::DistanceFunction;
 use crate::memory::*;
 use crate::{KMeans, KMeansConfig, KMeansState};
-use rand::distributions::weighted::WeightedIndex;
+use rand::distr::weighted::WeightedIndex;
 use rand::prelude::*;
 use std::ops::DerefMut;
 use std::simd::{LaneCount, Simd, SupportedLaneCount};
@@ -16,7 +16,7 @@ where
 {
     {
         // Randomly select first centroid
-        let first_idx = config.rnd.borrow_mut().gen_range(0..kmean.sample_cnt);
+        let first_idx = config.rnd.borrow_mut().random_range(0..kmean.sample_cnt);
         state.centroids.set_nth_from_iter(0, kmean.p_samples[first_idx].iter().cloned());
     }
     for k in 1..state.k {
@@ -73,7 +73,7 @@ mod tests {
 
         let mut rnd = rand::rngs::StdRng::seed_from_u64(1337);
         let mut samples = vec![T::zero(); sample_cnt * sample_dims];
-        samples.iter_mut().for_each(|v| *v = rnd.gen_range(T::zero()..T::one()));
+        samples.iter_mut().for_each(|v| *v = rnd.random_range(T::zero()..T::one()));
         let kmean: KMeans<_, LANES, _> = KMeans::new(&samples, sample_cnt, sample_dims, EuclideanDistance);
         let mut state = KMeansState::new::<LANES>(sample_cnt, sample_dims, k);
         let conf = KMeansConfig::build().random_generator(rnd).build();
