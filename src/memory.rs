@@ -4,7 +4,7 @@ use rand::distr::uniform::SampleUniform;
 use rand::distr::weighted::Weight;
 use std::ops::{Index, IndexMut};
 use std::simd::num::SimdFloat;
-use std::simd::{LaneCount, Simd, SimdElement, SupportedLaneCount};
+use std::simd::{Simd, SimdElement};
 use std::{iter, ops};
 
 pub trait Primitive:
@@ -64,7 +64,6 @@ pub trait SupportedSimdArray<T: Primitive, const LANES: usize>:
 
 impl<T: Primitive, const LANES: usize> SupportedSimdArray<T, LANES> for Simd<T, LANES>
 where
-    LaneCount<LANES>: SupportedLaneCount,
     Simd<T, LANES>: ops::Sub<Output = Simd<T, LANES>>
         + ops::Add<Output = Simd<T, LANES>>
         + ops::Mul<Output = Simd<T, LANES>>
